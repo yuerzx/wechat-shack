@@ -16,7 +16,7 @@ get_header("yaoyiyao");
 
 if (isset($_GET['ver']) && isset($_GET['from_user']) && !empty($_GET['ver']) && !empty($_GET['from_user']) &&!empty($_GET['t'])) {
     $time = intval($_GET['t']);
-    $ver_code = substr(md5($_GET['from_user'] .$time. "oneu"), -7);
+    $ver_code = substr(md5($_GET['gift_id'].$_GET['from_user'] .$time. "oneu"), -7);
     if ( $ver_code == $_GET['ver']) {
         //sucess
         $id = intval($_GET['gift_id']);
@@ -40,6 +40,9 @@ if (isset($_GET['ver']) && isset($_GET['from_user']) && !empty($_GET['ver']) && 
                 break;
             case 2:
                 include "gift-vouncher/page2.php";
+                break;
+            case 3:
+                include "gift-vouncher/page3.php";
                 break;
             default:
                 include "gift-vouncher/page1.php";

@@ -1,8 +1,8 @@
 
 <div class="row">
     <div class="col-md-12 text-center">
-        <h3>酸梅汤一扎</h3>
-        <img src="./img/10gift-vouncher.png">
+        <h3 style="margin-top: 0px;">酸梅汤一扎</h3>
+        <img src="./img/drink-vouncher.png">
     </div>
 </div>
 <div class="row">

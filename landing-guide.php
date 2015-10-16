@@ -63,7 +63,7 @@ if(!empty($_SESSION['openid'])){
 
 $from_user = $user_info->nickname;
 $time = system_time();
-$ver_code = substr(md5($user_info->nickname.$time."oneu"),-7);
+$ver_code = substr(md5($land_page_id.$user_info->nickname.$time."oneu"),-7);
 $url = "http://".$_SERVER["HTTP_HOST"] . $req_uri."/gift-voucher.php?gift_id=".$land_page_id."&ver=".$ver_code."&from_user=".$from_user."&t=".$time;
 wp_redirect( $url);
 exit;
