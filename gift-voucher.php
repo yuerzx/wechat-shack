@@ -24,6 +24,7 @@ if (isset($_GET['ver']) && isset($_GET['from_user']) && !empty($_GET['ver']) && 
         $week2_time = $time + 24*60*60*7*2;
 
         //include the separated parts for inner page
+        //todo: Add forward message
         ?>
         <header class="page-header" style="margin:0;">
             <h1 class="page-title text-center"><img src="img/header.png" style="max-width: 60%"></h1>
