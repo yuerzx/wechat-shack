@@ -8,8 +8,12 @@
 
 require("functions.php");
 
-global $user_class;
-$name = $user_class->get_user_info_by_email('alicechen0817@gmail.com');
-var_dump($name);
-//$email = $user_class->send_welcome_email('Chen Xu', 'alicechen0817@gmail.com');
-//var_dump($email);
+$current_time = system_time();
+echo $current_time."<br>";
+$tmr_time = $current_time+24*60*60;
+$DateTmr = date("l jS F \@ g:i a",$tmr_time);
+$week_time = $current_time+24*60*60*7*2;
+$DateNWek = date("l jS F \@ g:i a",$week_time);
+echo "Tomorrow ".$DateTmr."<br>";
+echo "Next Week".$DateNWek;
+
