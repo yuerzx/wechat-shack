@@ -17,14 +17,13 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'){ //windows is \ unix is /
 require ($adds.'wp-config.php');
 require "class/user_class.php";
 require_once 'class/PHPMailerAutoload.php';
-require_once 'class/SecureSession.php';
-
-// change the default session folder in a temporary dir
-session_save_path($sessionPath);
+require_once "class/class.CookiesManager.php";
+global $cookies;
+$cookies = New CookiesManager();
 
 global $wpdb;
-$table_game_user_one = $wpdb->prefix.'oneuni_games_user_one';
-global $table_game_user_one;
+$table_wechat_user = $wpdb->prefix.'oneuni_wechat_database';
+global $table_wechat_user;
 global $user_class;
 
 $user_class = new Game_Class();

@@ -14,7 +14,9 @@ get_header("yaoyiyao");
 
 //var_dump($_GET);
 
-if (isset($_GET['ver']) && isset($_GET['from_user']) && !empty($_GET['ver']) && !empty($_GET['from_user']) &&!empty($_GET['t'])) {
+if (isset($_GET['ver'])     && isset($_GET['from_user'])
+    && !empty($_GET['ver']) && !empty($_GET['from_user'])
+    && !empty($_GET['t'])   && isset($_GET['gift_id'])) {
     $time = intval($_GET['t']);
     $ver_code = substr(md5($_GET['gift_id'].$_GET['from_user'] .$time. "oneu"), -7);
     if ( $ver_code == $_GET['ver']) {
@@ -27,7 +29,9 @@ if (isset($_GET['ver']) && isset($_GET['from_user']) && !empty($_GET['ver']) && 
         //todo: Add forward message
         ?>
         <header class="page-header" style="margin:0;">
+            <div class="col-md-12">
             <h1 class="page-title text-center"><img src="img/header.png" style="max-width: 60%"></h1>
+            </div>
         </header>
         <div class="row text-center">
             <div class="col-md-12">
