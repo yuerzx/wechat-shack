@@ -14,11 +14,11 @@ get_header("yaoyiyao");
 
 //var_dump($_GET);
 
-if (isset($_GET['ver'])     && isset($_GET['from_user'])
-    && !empty($_GET['ver']) && !empty($_GET['from_user'])
+if (isset($_GET['ver']) && !empty($_GET['ver'])
     && !empty($_GET['t'])   && isset($_GET['gift_id'])) {
     $time = intval($_GET['t']);
-    $ver_code = substr(md5($_GET['gift_id'].$_GET['from_user'] .$time. "oneu"), -7);
+    $gift_id = intval($_GET['gift_id']);
+    $ver_code = substr(md5($gift_id.$time. "oneu"), -6);
     if ( $ver_code == $_GET['ver']) {
         //sucess
         $id = intval($_GET['gift_id']);

@@ -24,6 +24,8 @@ $cookies = New CookiesManager();
 global $wpdb;
 $table_wechat_user = $wpdb->prefix.'oneuni_wechat_database';
 global $table_wechat_user;
+$table_wechat_giftcard = $wpdb->prefix.'oneuni_wechat_giftcard';
+global $table_wechat_giftcard;
 global $user_class;
 
 $user_class = new Game_Class();

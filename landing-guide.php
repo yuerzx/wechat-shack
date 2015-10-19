@@ -53,15 +53,15 @@ if(!empty($_COOKIE['openid'])){
     $user_info = $jssdk->getPageUserInfo($code);
     if(!empty($user_info->openid)){
         // if successfully get the user information, then we are able to process.
-        $cookies->set("nickname",   $user_info->nickname,15,"days");
-        $cookies->set('user_id',    $user_info->nickname,15,"days" );
-        $cookies->set('openid',     $user_info->openid,15,"days" );
-        $cookies->set('city',       $user_info->city,15,"days" );
-        $cookies->set('country',    $user_info->country,15,"days" );
-        $cookies->set('headimgurl', $user_info->headimgurl,15,"days" );
+        $cookies->set("nickname",   $user_info->nickname,30,"days");
+        $cookies->set('user_id',    $user_info->nickname,30,"days" );
+        $cookies->set('openid',     $user_info->openid, 30,"days" );
+        $cookies->set('city',       $user_info->city,30,"days" );
+        $cookies->set('country',    $user_info->country,30,"days" );
+        $cookies->set('headimgurl', $user_info->headimgurl,30,"days" );
         $string = $user_info->nickname.$user_info->nickname.$user_info->openid.$user_info->city.$user_info->country.$user_info->headimgurl;
         $ver_code = substr(md5($string),0,-9);
-        $cookies->set('ver_code_user_data', $ver_code, 15, "days");
+        $cookies->set('ver_code_user_data', $ver_code, 30, "days");
     }else{
         //relocated to the login page, to get code again.
     }
@@ -77,10 +77,26 @@ if(!empty($_COOKIE['openid'])){
 }
 
 
-$from_user = $user_info->nickname;
 $time = system_time();
-$ver_code = substr(md5($land_page_id.$user_info->nickname.$time."oneu"),-7);
-$url = "http://".$_SERVER["HTTP_HOST"] . $req_uri."/gift-voucher.php?gift_id=".$land_page_id."&ver=".$ver_code."&from_user=".$from_user."&t=".$time;
+$gift_card_list = $jssdk->get_giftcard_by_id($user_info->user_id);
+if($gift_card_list){
+    //if there is a gift under user before
+    $time_diff = $gift_card_list[0]["time_stamp"] - $time;
+    //if the last time is 8 hours before, then we choose to close up the shack
+    if($time_diff <= 28800){
+        //smaller than 8 hours
+        $gift_id = $gift_card_list[0]["gift_id"];
+        $time = $gift_card_list[0]['time_stamp'];
+    }else{
+        $gift_id = $jssdk->create_giftcard($user_info->user_id,$land_page_id,$time);
+    }
+}else{
+    //if there is no giftcard under user before, then we create one for user
+    $gift_id = $jssdk->create_giftcard($user_info->user_id,$land_page_id,$time);
+}
+
+$ver_code = substr(md5($gift_id.$time."oneu"),0,-6);
+$url = "//".$_SERVER["HTTP_HOST"] . $req_uri."/gift-voucher.php?gift_id=".$gift_id."&t=".$time."&ver=".$ver_code;
 wp_redirect( $url);
 exit;
 

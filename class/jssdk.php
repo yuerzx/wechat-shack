@@ -2,15 +2,17 @@
 class JSSDK {
   private $appId;
   private $appSecret;
-  private $wpdb,$table_wechat_user;
+  private $wpdb,$table_wechat_user, $table_wechat_giftcard;
 
   public function __construct($appId, $appSecret) {
     global $wpdb;
     global $table_wechat_user;
+    global $table_wechat_giftcard;
     $this->appId = $appId;
     $this->appSecret = $appSecret;
     $this->wpdb = &$wpdb;
     $this->table_wechat_user = &$table_wechat_user;
+    $this->table_wechat_giftcard = &$table_wechat_giftcard;
   }
 
   public function getSignPackage() {
@@ -207,6 +209,35 @@ class JSSDK {
         ",
         $openid);
     $result = $this->wpdb->get_row( $query, ARRAY_A );
+    return $result;
+  }
+
+  public function create_giftcard($user_id, $gift_type,$time_stamp){
+    $result = $this->wpdb->insert(
+        $this->table_wechat_giftcard,
+        array(
+            'wechat_user_id'  => $user_id,
+            'gift_type'       => $gift_type,
+            'time_stamp'      => $time_stamp
+        ),
+        array(
+            '%d',
+            '%d',
+            '%d'
+        )
+    );
+    $lastid = $this->wpdb->insert_id;
+    return $lastid;
+  }
+
+  public function get_giftcard_by_id($user_id){
+    $user_id = intval($user_id);
+    $result = $this->wpdb->get_results("
+    SELECT gift_id,wechat_user_id,gift_type,time_stamp
+    FROM $this->table_wechat_giftcard WHERE
+    wechat_user_id = $user_id
+    ORDER BY time_stamp DESC
+    ", ARRAY_A);
     return $result;
   }
 
