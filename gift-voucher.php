@@ -7,6 +7,7 @@
  */
 
 include("functions.php");
+require('class/jssdk.php');
 get_header("yaoyiyao");
 
 //echo $_GET['gift_id'];
@@ -21,10 +22,10 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
     $ver_code = substr(md5($gift_id.$time. "oneu"), -6);
     if ( $ver_code == $_GET['ver']) {
         //sucess
-        $id = intval($_GET['gift_id']);
         $tmr_time = $time + 24*60*60;
         $week2_time = $time + 24*60*60*7*2;
-
+        //todo: get done this part to retive information from database and feedback
+        //Join two tables for it
         //include the separated parts for inner page
         ?>
         <div style="display: none"><img src="img/share-img.png"></div>
@@ -35,7 +36,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
         </header>
         <div class="row text-center">
             <div class="col-md-12">
-                <h3 style="font-weight: bold;"><?= $_GET['from_user'] ?> 获得</h3>
+                <h3 style="font-weight: bold;"><?= $_COOKIE['from_user'] ?> 获得</h3>
             </div>
         </div>
         <?php

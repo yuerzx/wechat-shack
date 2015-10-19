@@ -64,6 +64,8 @@ if(!empty($_COOKIE['openid'])){
         $cookies->set('ver_code_user_data', $ver_code, 30, "days");
     }else{
         //relocated to the login page, to get code again.
+        wp_redirect("wechat-landing.php");
+        exit;
     }
 }else{
     //without get and without the session, logout
