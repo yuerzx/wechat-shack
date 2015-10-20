@@ -18,6 +18,8 @@ $get = FALSE;
 
 $req_uri = explode('/',$_SERVER["REQUEST_URI"], -1);
 $req_uri = implode('/', $req_uri);
+$jssdk = new JSSDK("wx2d39a6c422ad663c", "e339b975f47c4a16b2b4b41f10fb5ef1");
+$user_info = new stdClass();
 
 
 if(isset($_GET['code']) && isset($_GET['state']) && strlen($_GET['code']) == 32){
@@ -35,13 +37,15 @@ if(!empty($_COOKIE['openid'])){
     $user_info-> country    = $_COOKIE['country'];
     $user_info-> city       = $_COOKIE['city'];
     $user_info-> headimgurl = $_COOKIE['headimgurl'];
-    $string = $user_info->nickname.$user_info->nickname.$user_info->openid.$user_info->city.$user_info->country.$user_info->headimgurl;
-    $ver_code = substr(md5($string),0,-9);
-    if($ver_code != $_COOKIE['ver_code_user_data']){
+    $string = $user_info->user_id."oneu";
+    $ver_code = substr(md5($string),-9);
+    if( $ver_code == $_COOKIE['ver_code_user_data']) {
+        //if true then we do nothing about it
+    }else{
         //if the cookies has been modified by user
         //we use blank information instead
         $user_info-> nickname   = "万友澳洲 测试账号";
-        $user_info-> user_id    = 1;
+        $user_info-> user_id    = 11;
         $user_info-> openid     = "00";
         $user_info-> country    = "澳大利亚";
         $user_info-> city       = "墨尔本";
@@ -49,18 +53,17 @@ if(!empty($_COOKIE['openid'])){
     }
 }elseif($get && empty($_COOKIE['openid'])){
     //if customers are new, then we are ready for next step.
-    $jssdk = new JSSDK("wx2d39a6c422ad663c", "e339b975f47c4a16b2b4b41f10fb5ef1");
     $user_info = $jssdk->getPageUserInfo($code);
     if(!empty($user_info->openid)){
         // if successfully get the user information, then we are able to process.
         $cookies->set("nickname",   $user_info->nickname,30,"days");
-        $cookies->set('user_id',    $user_info->nickname,30,"days" );
+        $cookies->set('user_id',    $user_info->user_id,30,"days" );
         $cookies->set('openid',     $user_info->openid, 30,"days" );
         $cookies->set('city',       $user_info->city,30,"days" );
         $cookies->set('country',    $user_info->country,30,"days" );
         $cookies->set('headimgurl', $user_info->headimgurl,30,"days" );
-        $string = $user_info->nickname.$user_info->nickname.$user_info->openid.$user_info->city.$user_info->country.$user_info->headimgurl;
-        $ver_code = substr(md5($string),0,-9);
+        $string = $user_info->user_id."oneu";
+        $ver_code = substr(md5($string),-9);
         $cookies->set('ver_code_user_data', $ver_code, 30, "days");
     }else{
         //relocated to the login page, to get code again.
@@ -71,7 +74,7 @@ if(!empty($_COOKIE['openid'])){
     //without get and without the session, logout
     $user_info = new stdClass();
     $user_info-> nickname   = "万友澳洲 测试账号";
-    $user_info-> user_id    = 1;
+    $user_info-> user_id    = 11;
     $user_info-> openid     = "00";
     $user_info-> country    = "澳大利亚";
     $user_info-> city       = "墨尔本";
@@ -83,7 +86,7 @@ $time = system_time();
 $gift_card_list = $jssdk->get_giftcard_by_id($user_info->user_id);
 if($gift_card_list){
     //if there is a gift under user before
-    $time_diff = $gift_card_list[0]["time_stamp"] - $time;
+    $time_diff = $time - $gift_card_list[0]["time_stamp"];
     //if the last time is 8 hours before, then we choose to close up the shack
     if($time_diff <= 28800){
         //smaller than 8 hours
@@ -97,8 +100,11 @@ if($gift_card_list){
     $gift_id = $jssdk->create_giftcard($user_info->user_id,$land_page_id,$time);
 }
 
-$ver_code = substr(md5($gift_id.$time."oneu"),0,-6);
+$ver_code = substr(md5($gift_id.$time."oneu"),-6);
 $url = "//".$_SERVER["HTTP_HOST"] . $req_uri."/gift-voucher.php?gift_id=".$gift_id."&t=".$time."&ver=".$ver_code;
+
+//var_dump($url);
+//var_dump($user_info);
 wp_redirect( $url);
 exit;
 

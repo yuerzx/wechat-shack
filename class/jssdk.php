@@ -178,7 +178,8 @@ class JSSDK {
             '%s'
         )
     );
-    return $result;
+    $lastid = $this->wpdb->insert_id;
+    return $lastid;
   }
 
   private function updateUserInfo($openid, $data){
