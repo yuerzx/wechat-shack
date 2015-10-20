@@ -83,9 +83,6 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
                 break;
         }
         //end of row sections
-//        var_dump($_COOKIE);
-//        echo "<hr>";
-//        var_dump($user_information[0]);
 
         if( isset($_COOKIE['user_id']) && $_COOKIE['user_id'] == $user_information[0]['user_id'] ){
             //show claim button
