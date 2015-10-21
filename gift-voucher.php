@@ -56,6 +56,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
 
         //include the separated parts for inner page
         ?>
+        <script src="js/jquery.countdown.min.js"></script>
         <div style="display: none"><img src="img/share-img.png"></div>
         <header class="page-header" style="margin:0;">
             <div class="col-md-12">
@@ -97,6 +98,11 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
                     </button>
                 </div>
             </div>
+            <div class="row">
+            <div class="col-md-12">
+                     <div class="alert alert-info text-center" role="alert"><h5>距离下一次摇一摇还有:</h5><div id="getting-started"></div></div>
+            </div>
+            </div>
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -120,7 +126,23 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
         </div>
             <?php
         }
+        ?>
+        <!--        Start countdown code -->
+        <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery("#getting-started")
+               .countdown(<?= ($time+60*60*8)*1000; ?>, function(event) {
+                 jQuery(this).text(
+                   event.strftime('%H:%M:%S')
+                 );
+               });
+        }
+        );
 
+         </script>
+
+
+        <?php
         get_footer();
         ?>
 
