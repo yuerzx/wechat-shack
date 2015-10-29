@@ -174,10 +174,32 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
 
 
             <?php
+        }else{
+            ?>
+            <div class="row">
+                <div class="col-md-12 text-center" style="display: none;" id="poster" style="padding-bottom: 10px;">
+                    <img src="img/poster.jpg" style="max-width: 95%;">
+                </div>
+                <div class="col-md-12" style="padding-top: 20px;">
+                    <button type="button"
+                            class="btn btn-warning btn-lg btn-block"
+                            id="events-detail">
+                        活动详情
+                    </button>
+                </div>
+
+            </div>
+            <?php
         }
         ?>
         <!--        Start Update Info   -->
         <script>
+        jQuery(document).ready(function($){
+            $('#events-detail').click(function(){
+                $('#poster').toggle(3000);
+            });
+        });
+
         jQuery(document).ready(function($){
             $('#claim-vouncher').click(function(){
                 $.ajax({
