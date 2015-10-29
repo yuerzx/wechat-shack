@@ -60,6 +60,12 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
 
         <script src="js/jquery.countdown.min.js"></script>
         <div style="display: none"><img src="img/share-img.png"></div>
+        <div class="row">
+            <div class="col-md-12 text-center" id="poster-header" style="padding-bottom: 10px;">
+                <img src="img/poster.jpg" style="max-width: 95%;">
+                <hr>
+            </div>
+        </div>
         <img src="img/header.png" style="max-width: 99%;">
         <div class="row text-center">
             <div class="col-md-12">
@@ -201,6 +207,11 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
             });
         });
 
+        jQuery(document).ready(function(){
+            setTimeout(function(){
+                jQuery('#poster-header').fadeOut(1500);
+            }, 8000);
+        });
         jQuery(document).ready(function($){
             $('#claim-vouncher').click(function(){
                 $.ajax({
