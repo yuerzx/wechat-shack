@@ -34,6 +34,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
             $table_wechat_user.openid,
             $table_wechat_user.user_id,
             $table_wechat_giftcard.gift_type,
+            $table_wechat_giftcard.gift_status,
             $table_wechat_giftcard.time_stamp,
             $table_wechat_user.nickname
             FROM $table_wechat_giftcard
@@ -56,6 +57,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
 
         //include the separated parts for inner page
         ?>
+
         <script src="js/jquery.countdown.min.js"></script>
         <div style="display: none"><img src="img/share-img.png"></div>
         <img src="img/header.png" style="max-width: 99%;">
@@ -106,21 +108,39 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
             </ul>
         </div>
     </div>
-
         <?php
+        $current_time = system_time();
+        $gift_status = 'new';
+        if($user_information[0]['gift_status'] == 1){
+            $gift_status = 'used';
+        }elseif($current_time < $tmr_time || $current_time > $week2_time){
+            $gift_status = 'expired';
+        }else{
+            $gift_status = 'new';
+        }
 
-
-        //if( isset($_COOKIE['user_id']) && $_COOKIE['user_id'] == $user_information[0]['user_id'] ){
+        if( isset($_COOKIE['user_id']) && $_COOKIE['user_id'] == $user_information[0]['user_id'] ){
             //show claim button
             ?>
             <div class="row">
                 <div class="col-md-12">
 
                     <button type="button"
-                            class="btn btn-warning btn-lg btn-block"
+                            class="btn <?php if($gift_status != 'new'){echo "btn-danger";}else{echo "btn-warning";}?> btn-lg btn-block"
                             data-toggle="modal"
-                            data-target=".bs-example-modal-lg">
-                        使用折扣券
+                            data-target=".bs-example-modal-lg"
+                            <?php if($gift_status != 'new'){echo "disabled";} ?>
+                        id="start-claim">
+                        <?php
+                            if($gift_status == 'used'){
+                                echo "礼券已经被使用";
+                            }elseif($gift_status == 'expired'){
+                                echo "礼券不在有效期中！";
+                            }else{
+                                echo "使用折扣券";
+                            }
+                        ?>
+
                     </button>
                 </div>
             </div>
@@ -129,7 +149,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
                  <div class="alert alert-info text-center" role="alert"><h5>距离下一次摇一摇还有:</h5><div id="getting-started"></div></div>
             </div>
             </div>
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -150,9 +170,11 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
 
                 </div>
             </div>
-        </div>
+        </div></div>
+
+
             <?php
-       // }
+        }
         ?>
         <!--        Start Update Info   -->
         <script>
@@ -164,12 +186,17 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
                         "gift_id"   : <?= $gift_id?>,
                         "ver"       :"<?= code_check($gift_id,6);?>"
                     },
-                    method: "POST"
-                }).done(
-                function(data){
-                //alert("Good Day");
-                console.log(data);
-                }
+                    method: "POST",
+                    dataType: 'json'
+                }).done(function(data){
+                    if(data['status'] == 'ok'){
+                        alert("恭喜，使用成功");
+                        location.reload();
+                    }else{
+                        alert("使用失败，请刷新后重试！");
+                    }
+                    console.log(data);
+                    }
                 );
             });
         });
