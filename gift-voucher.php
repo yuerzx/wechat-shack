@@ -141,8 +141,9 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
                      一但点击使用，您的优惠券将会失效。只有No.1餐厅成员确认才有效。
                         <div class="col-md-12">
                             <button type="button"
-                            class="btn btn-danger btn-lg btn-block">
-                        确认使用
+                            class="btn btn-danger btn-lg btn-block"
+                            id="claim-vouncher">
+                            确认使用
                             </button>
                         </div>
                      </div>
@@ -153,6 +154,27 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
             <?php
        // }
         ?>
+        <!--        Start Update Info   -->
+        <script>
+        jQuery(document).ready(function($){
+            $('#claim-vouncher').click(function(){
+                $.ajax({
+                    url:"wp-ajax/ajax-update-status.php",
+                    data: {
+                        "gift_id"   : <?= $gift_id?>,
+                        "ver"       :"<?= code_check($gift_id,6);?>"
+                    },
+                    method: "POST"
+                }).done(
+                function(data){
+                //alert("Good Day");
+                console.log(data);
+                }
+                );
+            });
+        });
+        </script>
+        <!--        End Update Info     -->
         <!--        Start countdown code -->
         <script type="text/javascript">
         jQuery(document).ready(function(){

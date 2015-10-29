@@ -35,3 +35,6 @@ function system_time(){
     return $sec;
 }
 
+function code_check($code, $length){
+    return substr(md5($code."oneu"),0,$length);
+}

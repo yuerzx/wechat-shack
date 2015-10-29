@@ -164,11 +164,11 @@ class JSSDK {
     $result = $this->wpdb->insert(
         $this->table_wechat_user,
         array(
-            'openid'        => $data->openid,
-            'access_token'  => $data->access_token,
-            'refresh_token' => $data->refresh_token,
-            'join_time_stamp' => date("Y-m-d H:i:s"),
-            'unionid'       => $data->unionid
+            'openid'            => $data->openid,
+            'access_token'      => $data->access_token,
+            'refresh_token'     => $data->refresh_token,
+            'join_time_stamp'   => date("Y-m-d H:i:s"),
+            'unionid'           => $data->unionid
         ),
         array(
             '%s',
