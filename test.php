@@ -9,9 +9,10 @@
 require("functions.php");
 require('class/jssdk.php');
 
-$jssdk = new JSSDK("wx2d39a6c422ad663c", "e339b975f47c4a16b2b4b41f10fb5ef1");
+$cookies = new CookiesManager();
+//$cookies->destroy_all();
 
-$time = system_time();
-$test = $jssdk->get_giftcard_by_id(1);
-var_dump($test[0]["time_stamp"]);
+for ($x = 0; $x <= 30; $x++) {
+    echo "The number is: ".substr(md5($x."oneu"),-9)." <br>";
+}
 

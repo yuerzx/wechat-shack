@@ -58,38 +58,64 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
         ?>
         <script src="js/jquery.countdown.min.js"></script>
         <div style="display: none"><img src="img/share-img.png"></div>
-        <header class="page-header" style="margin:0;">
-            <div class="col-md-12">
-            <h1 class="page-title text-center"><img src="img/header.png" style="max-width: 60%;margin-top: -40px;"></h1>
-            </div>
-        </header>
+        <img src="img/header.png" style="max-width: 99%;">
         <div class="row text-center">
             <div class="col-md-12">
                 <h3 style="font-weight: bold;"><?php echo $user_information[0]['nickname']; ?> 获得</h3>
             </div>
         </div>
         <?php
-        switch ($id) {
+        switch ($user_information[0]['gift_type']) {
             case 1:
-                include "gift-vouncher/page1.php";
+                $gift = "5yuan";
                 break;
             case 2:
-                include "gift-vouncher/page2.php";
+                $gift = "10yuan";
                 break;
             case 3:
-                include "gift-vouncher/page3.php";
+                $gift = "caomao";
+                break;
+            case 4:
+                $gift = "congyoubing";
+                break;
+            case 5:
+                $gift = "suanmeitang";
+                break;
+            case 6:
+                $gift = "wanzi";
                 break;
             default:
-                include "gift-vouncher/page1.php";
+                $gift = "5yuan";
                 break;
         }
+        $gift_img = "gift-".$gift;
         //end of row sections
+        ?>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <img src="img/<?= $gift_img ?>.png">
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-12">
+            <img src="img/use-introduction.png" style="max-width: 25%;padding-top: 20px;">
+            <ul style="text-align: left">
+                <li>将此页面分享到朋友圈，并且集齐5个赞或者评论，即可以使用</li>
+                <li>每桌仅限1张</li>
+                <li>有效期: 自 <?= date("D jS M",$tmr_time); ?> 至 <?= date("D jS M",$week2_time); ?></li>
+            </ul>
+        </div>
+    </div>
 
-        if( isset($_COOKIE['user_id']) && $_COOKIE['user_id'] == $user_information[0]['user_id'] ){
+        <?php
+
+
+        //if( isset($_COOKIE['user_id']) && $_COOKIE['user_id'] == $user_information[0]['user_id'] ){
             //show claim button
             ?>
             <div class="row">
                 <div class="col-md-12">
+
                     <button type="button"
                             class="btn btn-warning btn-lg btn-block"
                             data-toggle="modal"
@@ -100,7 +126,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
             </div>
             <div class="row">
             <div class="col-md-12">
-                     <div class="alert alert-info text-center" role="alert"><h5>距离下一次摇一摇还有:</h5><div id="getting-started"></div></div>
+                 <div class="alert alert-info text-center" role="alert"><h5>距离下一次摇一摇还有:</h5><div id="getting-started"></div></div>
             </div>
             </div>
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -125,7 +151,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
             </div>
         </div>
             <?php
-        }
+       // }
         ?>
         <!--        Start countdown code -->
         <script type="text/javascript">

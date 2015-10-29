@@ -10,7 +10,7 @@ include("functions.php");
 require('class/jssdk.php');
 global $cookies;
 
-$opp = array(1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 1, 1);
+$opp = array(1, 2, 3, 4, 5, 6, 2, 1, 4, 5, 6, 4, 3);
 $rand = rand(0, 12);
 //get the random page id
 $land_page_id = $opp[$rand];
