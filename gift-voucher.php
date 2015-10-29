@@ -105,6 +105,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
                 <li>将此页面分享到朋友圈，并且集齐5个赞或者评论，即可以使用</li>
                 <li>每桌仅限1张</li>
                 <li>有效期: 自 <?= date("D jS M",$tmr_time); ?> 至 <?= date("D jS M",$week2_time); ?></li>
+                <li>如果需要保存此代金券，请将代金券分享到朋友圈或者保存链接。</li>
             </ul>
         </div>
     </div>
