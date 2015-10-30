@@ -110,7 +110,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
             <ul style="text-align: left">
                 <li>将此页面分享到朋友圈，并且集齐5个赞或者评论，即可以使用</li>
                 <li>每桌仅限1张</li>
-                <li>有效期: 自 <?= date("D jS M",$tmr_time); ?> 至 <?= date("D jS M",$week2_time); ?></li>
+                <li>有效期: 自 <?= date("D jS M",$time); ?> 至 <?= date("D jS M",$week2_time); ?></li>
                 <li>如果需要保存此代金券，请将代金券分享到朋友圈或者保存链接。</li>
             </ul>
         </div>
@@ -120,7 +120,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
         $gift_status = 'new';
         if($user_information[0]['gift_status'] == 1){
             $gift_status = 'used';
-        }elseif($current_time < $tmr_time || $current_time > $week2_time){
+        }elseif($current_time > $week2_time){
             $gift_status = 'expired';
         }else{
             $gift_status = 'new';
@@ -259,7 +259,7 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
 
         }else{
 
-        var_dump("Ver: ".$ver_code);
+        //var_dump("Ver: ".$ver_code);
         err_report();
         }
     } else {
