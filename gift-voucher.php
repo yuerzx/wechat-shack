@@ -165,7 +165,8 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
                     </div>
                     <div class="modal-body">
                     <div class="row text-center">
-                     一但点击使用，您的优惠券将会失效。只有No.1餐厅成员确认才有效。
+                     一但点击使用，您的优惠券将会失效。只有No.1餐厅成员确认才有效。<br>
+                        No.1 员工请确认点赞或者评论足够5条后再点击使用。
                         <div class="col-md-12">
                             <button type="button"
                             class="btn btn-danger btn-lg btn-block"
