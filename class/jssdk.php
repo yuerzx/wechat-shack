@@ -117,13 +117,9 @@ class JSSDK {
       if($this->checkUserExist($res->openid)){
         //check if the user is in database already
         //retreat from database
-        $user_info = $this->getUserByOpenID($res->openid);
-        $object = new stdClass();
-        foreach ($user_info as $key => $value)
-        {
-          $object -> $key = $value;
-        }
-        return $object;
+        $user_info = $this->getUserByOpenID( (string)$res->openid);
+        $update_result = $this->updateUserInfo( (string)$res->openid, $res);
+        return $res;
       }else{
         //not existed before, I need to creat something
         $this->insertNewUser($res);
