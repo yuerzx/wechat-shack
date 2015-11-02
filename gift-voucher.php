@@ -251,7 +251,11 @@ if (isset($_GET['ver']) && !empty($_GET['ver'])
 
          </script>
 
-
+        <div class="row">
+            <div class="col-md-12">
+                <h3>万友澳洲 PY NATTI</h3>
+            </div>
+        </div>
         <?php
         get_footer();
         ?>
